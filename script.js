@@ -1,84 +1,66 @@
-const cores = ['vermelho', 'verde', 'azul', 'amarelo', 'roxo', 'laranja']
-let sequencia = [];
-let sequenciaJogador = [];
-let nivel = 1;
-let jogando = true;
+const cartelaDiv = document.getElementById('cartela');
 
-const botoesCores = cores.map(cor => document.getElementById(cor));
-const startButton = document.getElementById('start-button');
-const nivelTexto = document.getElementById('nivel');
 
-startButton.addEventListener('click', iniciarJogo);
+const numerosSorteadosDiv = document.getElementById('numeroSorteados');
 
-function iniciarJogo(){
-    sequencia = [];
-    sequenciaJogador = [];
-    nivel = 1;
-    jogando = true;
-    nivelTexto.textContent = `Nivel: ${nivel}`;
-    proximoNivel();
-}
+let numeroSorteados = [];
 
-function proximoNivel(){
-    sequenciaJogador = [];
-    let numeroCores = 1 + (nivel - 1);
+const totalNumeros = 75;
 
-    for (let i=0 < numeroCores; i++){
-        const novaCor = cores[Math.floor(Math.random() * cores.length)]
-        sequencia.push(novaCor)
+document.getElementById('renderizar').addEventListener
+('click', confirmarRenderizacao);
+
+document.getElementById('sortear').addEventListener
+('click', sortearNumero)
+
+function confirmarRenderizacao(){
+    const confirmar = confirm('Voce tem certeza que deseja uma nova cartela ?');
+
+    if(confirmar){
+        renderizarCartela()
     }
-
-    nivelTexto.textContent = `Nivel: ${nivel}`
-    tocarSequencia();
 }
 
-function tocarSequencia(){
-    let i = 0;
-    const intervalo = setInterval(() => {
-     ativarBotao(sequencia[i]);
-     i++;
-     
-     if (i >= sequencia.length){
-        clearInterval(intervalo)
-     }
-    },1000)
-}
+function renderizarCartela(){
+    cartelaDiv.innerHTML= '';
+    const cartela = [];
 
-
-function ativarBotao(cor){
-    const botao = document.getElementById(cor);
-    botao.classList.add('active');
-    setTimeout(() => botao.classList.remove('active'), 500)
-}
-
-botoesCores.forEach(botao => {
-    botao.addEventListener('click', (e) => {
-        if(!jogando) return;
-        const corSelecionado = e.target.dispatchEvent;
-
-        sequenciaJogador.push(corSelecionado);
-        ativarBotao(corSelecionado);
-        verificarResposta();
-    })
-})
-
-
-
-function verificarResposta(){
-    const indiceAtual = sequenciaJogador.length - 1;
-    if(sequenciaJogador[indiceAtual] !== sequencia[indiceAtual]){
-        alert('Voce errou! Tente novamente.')
-        jogando = false;
-        return;
-    }
-
-    if(sequenciaJogador.length === sequencia.length){
-        if(nivel === 5){
-            alert('Parabéns! Voce completou todos os niveis!')
-            jogando = false;
-        } else {
-            nivel++;
-            setTimeout(proximoNivel, 1000)
+    while(cartela. length < 25) {
+        const numero = Math.floor(Math.random( ) * 
+    totalNumeros) + 1;
+    if(!cartela.includes(numero)){
+        cartela.push(numero)
         }
     }
+
+    
+    cartela.sort((a,b) => a - b)
+
+    cartela.forEach(numero => {
+        const div = document.createElement('div');
+        div.className = 'numero';
+        div.textContent = numero;
+
+        div.addEventListener('click', () => {
+            div.classList.toggle('clicado');
+        })
+
+        cartelaDiv.appendChild(div)
+    })
+}
+
+function sortearNumero(){
+    let numeroSorteado;
+
+    do{
+        numeroSorteado = Math.floor(Math.random() * totalNumeros) + 1
+    } while (numeroSorteado.includes(numeroSorteado));
+
+    numerosSorteados.push(numeroSorteado);
+
+    const span = document.createElement('span');
+    span.classList = 'numero-sorteado';
+    span.textContent = numeroSorteado;
+
+    numerosSorteadosDiv.appendChild(span);
 }

@@ -1,6 +1,32 @@
-.numero{
-
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
 }
+
+h1{
+    color: #333;
+}
+
+#cartela{
+
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin: 20px auto;
+max-width: 300px;
+}
+
+.numero{
+padding: 20px;
+border: 1px solid #ccc;
+cursor: pointer;
+border-radius: 8px;
+transition: background-color 0.3s, transform 0.3s;
+background-color: #fff;
+}
+
 .numero:hover{
     transform: scale(1.05);
     border-color: #888;
@@ -42,4 +68,11 @@ button{
 
 button:hover{
     background-color: #218838;
+}
+
+.botoes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
 }
